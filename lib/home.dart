@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:login_v2/charts/chart.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,7 +10,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double _saldo = 0.00;
+  double _saldo = 15.75;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: const Color.fromARGB(255, 129, 248, 106),
       appBar: AppBar(
         backgroundColor: const Color(0xFF1f7735),
@@ -38,8 +41,34 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu, color: Colors.white),
+          onPressed: () {
+            _scaffoldKey.currentState?.openDrawer();
+          },
+          icon: const Icon(
+            Icons.menu,
+            color: Color.fromARGB(255, 255, 255, 255),
+          ),
+        ),
+      ),
+      drawer: SizedBox(
+        width: 150,
+        child: Drawer(
+          backgroundColor: Colors.green,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.logout, color: Colors.white),
+                title: const Text(
+                  'Sair',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, '/');
+                },
+              ),
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -50,33 +79,33 @@ class _HomeScreenState extends State<HomeScreen> {
             // Card do Saldo
             Card(
               margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
-              color: const Color.fromARGB(255, 255, 255, 255),
+              color: Colors.white,
               elevation: 12,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
               child: SizedBox(
                 height: 180,
-                width: 600,
+                width: double.infinity,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 40, 150, 40),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Saldo',
                         style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 0, 0, 0),
+                          color: Colors.black,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
                         currencyFormat.format(_saldo),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 30,
-                          color: const Color.fromARGB(255, 0, 0, 0),
+                          color: Colors.black,
                         ),
                       ),
                     ],
@@ -110,26 +139,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-
             Card(
               margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
-              color: const Color.fromARGB(255, 255, 255, 255),
+              color: Colors.white,
               elevation: 12,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(120, 40, 120, 40),
+                padding: const EdgeInsets.fromLTRB(20, 15, 20, 60),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Gastos por Categoria',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: const Color.fromARGB(255, 3, 0, 0),
-                      ),
+                      style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
+                    const SizedBox(
+                      height: 200, // define a altura do gráfico
+                      child: DonutChart(), // seu gráfico importado
+                    ),
                   ],
                 ),
               ),
@@ -137,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             Card(
               margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
-              color: const Color.fromARGB(255, 255, 255, 255),
+              color: Colors.white,
               elevation: 12,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -145,23 +175,19 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(150, 40, 150, 40),
                 child: Column(
-                  children: [
+                  children: const [
                     Text(
                       'Ações Rápidas',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                      ),
+                      style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
                     SizedBox(height: 10),
                   ],
                 ),
               ),
             ),
-
             Card(
               margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
-              color: const Color.fromARGB(255, 255, 255, 255),
+              color: Colors.white,
               elevation: 12,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -169,42 +195,30 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(120, 40, 120, 40),
                 child: Column(
-                  children: [
+                  children: const [
                     Text(
                       'Transações Recentes',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                      ),
+                      style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
                     SizedBox(height: 10),
                   ],
                 ),
               ),
             ),
-
-            const SizedBox(height: 30),
-            // Botões
-            ActionButton(
-              margin: const EdgeInsets.fromLTRB(100, 0, 100, 10),
-              text: 'Back to Log In',
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/');
-              },
-            ),
-            const SizedBox(height: 10),
-            ActionButton(
-              margin: const EdgeInsets.fromLTRB(100, 0, 100, 0),
-              text: 'Soma',
-              onPressed: () {
-                setState(() {
-                  _saldo += 4.50;
-                });
-              },
-            ),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            _saldo += 4.50;
+          });
+        },
+        backgroundColor: const Color.fromARGB(255, 18, 88, 21),
+        foregroundColor: Colors.white,
+        child: const Icon(Icons.add, size: 40),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
@@ -282,7 +296,7 @@ class ActionButton extends StatelessWidget {
         child: Text(
           text,
           style: const TextStyle(
-            color: Color.fromARGB(255, 255, 255, 255),
+            color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 13,
             shadows: [
