@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: const Color.fromARGB(255, 129, 248, 106),
+      backgroundColor: const Color.fromARGB(255, 220, 248, 215),
       appBar: AppBar(
         backgroundColor: const Color(0xFF1f7735),
         elevation: 10,
@@ -76,10 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Card do Saldo
             Card(
-              margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
-              color: Colors.white,
+              margin: const EdgeInsets.fromLTRB(10, 30, 0, 0),
+              color: const Color(0xFF1f7735),
               elevation: 12,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -88,31 +87,48 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 180,
                 width: double.infinity,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 40, 150, 40),
+                  padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Saldo',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                      const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Saldo Total',
+                          style: TextStyle(fontSize: 30, color: Colors.white),
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Text(
-                        currencyFormat.format(_saldo),
-                        style: const TextStyle(
-                          fontSize: 30,
-                          color: Colors.black,
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          currencyFormat.format(_saldo),
+                          style: const TextStyle(
+                            fontSize: 45,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
+                      const Spacer(),
+                      const SizedBox(height: 2),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Última atualização: ${DateFormat.Hm().format(DateTime.now())}',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white.withOpacity(0.75),
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
                     ],
                   ),
                 ),
               ),
             ),
+
             const SizedBox(height: 30),
             // Suas Contas
             const Align(
@@ -156,15 +172,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
                     const SizedBox(height: 10),
-                    const SizedBox(
-                      height: 200, // define a altura do gráfico
-                      child: DonutChart(), // seu gráfico importado
-                    ),
+                    const SizedBox(height: 200, child: DonutChart()),
                   ],
                 ),
               ),
             ),
-
             Card(
               margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
               color: Colors.white,
