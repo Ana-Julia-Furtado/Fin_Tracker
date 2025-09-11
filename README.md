@@ -1,6 +1,6 @@
-# login_v2
+# Finance Tracker
 
-A new Flutter project.
+A new Flutter project to track your personal finances
 
 ## Getting Started
 
