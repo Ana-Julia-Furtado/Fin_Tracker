@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:login_v2/charts/chart.dart';
+import 'dart:math' as math;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,9 +22,13 @@ class _HomeScreenState extends State<HomeScreen> {
       decimalDigits: 2,
     );
 
+    final cardShape = RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15),
+    );
+
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: const Color.fromARGB(255, 129, 248, 106),
+      backgroundColor: const Color.fromARGB(255, 220, 248, 215),
       appBar: AppBar(
         backgroundColor: const Color(0xFF1f7735),
         elevation: 10,
@@ -42,79 +47,97 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         leading: IconButton(
           onPressed: () {
-            _scaffoldKey.currentState?.openDrawer();
+            Navigator.pushReplacementNamed(context, '/');
           },
-          icon: const Icon(
-            Icons.menu,
-            color: Color.fromARGB(255, 255, 255, 255),
+          icon: Transform.rotate(
+            angle: math.pi,
+            child: const Icon(
+              Icons.logout,
+              color: Color.fromARGB(255, 255, 255, 255),
+            ),
           ),
         ),
       ),
-      drawer: SizedBox(
-        width: 150,
-        child: Drawer(
-          backgroundColor: Colors.green,
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              ListTile(
-                leading: const Icon(Icons.logout, color: Colors.white),
-                title: const Text(
-                  'Sair',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onTap: () {
-                  Navigator.pushReplacementNamed(context, '/');
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 120),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Card do Saldo
+            // Saldo Total
             Card(
-              margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
-              color: Colors.white,
+              margin: const EdgeInsets.fromLTRB(1, 30, 1, 0),
+              color: const Color(0xFF1f7735),
               elevation: 12,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
+              shape: cardShape,
               child: SizedBox(
                 height: 180,
                 width: double.infinity,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 40, 150, 40),
+                  padding: const EdgeInsets.all(15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Saldo',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Saldo Total',
+                            style: TextStyle(fontSize: 30, color: Colors.white),
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.visibility,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.autorenew_rounded,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 10),
-                      Text(
-                        currencyFormat.format(_saldo),
-                        style: const TextStyle(
-                          fontSize: 30,
-                          color: Colors.black,
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          currencyFormat.format(_saldo),
+                          style: const TextStyle(
+                            fontSize: 45,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
+                      const Spacer(),
+                      const SizedBox(height: 2),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Última atualização: ${DateFormat.Hm().format(DateTime.now())}',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white.withOpacity(0.75),
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
                     ],
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 30),
-            // Suas Contas
+
+            const SizedBox(height: 20),
             const Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -122,59 +145,78 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(fontSize: 25, color: Colors.black),
               ),
             ),
-            const SizedBox(height: 22),
-            Row(
-              children: const [
-                Expanded(
-                  child: AccountCard(
-                    title: 'Conta Corrente',
-                    margin: EdgeInsets.fromLTRB(10, 0, 0, 10),
+            const SizedBox(height: 15),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Card(
+                    margin: const EdgeInsets.all(8),
+                    child: SizedBox(
+                      width: 150,
+                      height: 100,
+                      child: Center(child: Text("Conta Corrente")),
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: AccountCard(
-                    title: 'Poupança',
-                    margin: EdgeInsets.fromLTRB(10, 0, 0, 10),
+                  Card(
+                    margin: const EdgeInsets.all(8),
+                    child: SizedBox(
+                      width: 150,
+                      height: 100,
+                      child: Center(child: Text("Poupança")),
+                    ),
                   ),
-                ),
-              ],
+                  Card(
+                    margin: const EdgeInsets.all(8),
+                    child: SizedBox(
+                      width: 150,
+                      height: 100,
+                      child: Center(child: Text("Investimentos")),
+                    ),
+                  ),
+                  Card(
+                    margin: const EdgeInsets.all(8),
+                    child: SizedBox(
+                      width: 150,
+                      height: 100,
+                      child: Center(child: Text("Cartão de Crédito")),
+                    ),
+                  ),
+                ],
+              ),
             ),
+
             Card(
-              margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
+              margin: const EdgeInsets.fromLTRB(15, 10, 0, 5),
               color: Colors.white,
               elevation: 12,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
+              shape: cardShape,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 15, 20, 60),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
+                  children: const [
+                    Text(
                       'Gastos por Categoria',
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                    const SizedBox(height: 10),
-                    const SizedBox(
-                      height: 200, // define a altura do gráfico
-                      child: DonutChart(), // seu gráfico importado
-                    ),
+                    SizedBox(height: 10),
+                    SizedBox(height: 200, width: 400, child: DonutChart()),
                   ],
                 ),
               ),
             ),
 
+            // Ações Rápidas
             Card(
               margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
               color: Colors.white,
               elevation: 12,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
+              shape: cardShape,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(150, 40, 150, 40),
+                padding: const EdgeInsets.fromLTRB(90, 60, 130, 60),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
                     Text(
                       'Ações Rápidas',
@@ -185,13 +227,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+
+            // Transações Recentes
             Card(
               margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
               color: Colors.white,
               elevation: 12,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
+              shape: cardShape,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(120, 40, 120, 40),
                 child: Column(
@@ -208,6 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
@@ -226,12 +269,14 @@ class _HomeScreenState extends State<HomeScreen> {
 class AccountCard extends StatelessWidget {
   final String title;
   final EdgeInsets? margin;
+  final EdgeInsets? padding;
   final double? elevation;
   final ShapeBorder? shape;
   const AccountCard({
     super.key,
     required this.title,
     this.margin,
+    this.padding,
     this.elevation,
     this.shape,
   });

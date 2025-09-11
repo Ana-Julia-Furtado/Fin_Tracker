@@ -138,7 +138,7 @@ class LoginScreen extends StatelessWidget {
 
               // Botão Login
               Padding(
-                padding: const EdgeInsets.fromLTRB(170, 20, 170, 0),
+                padding: const EdgeInsets.fromLTRB(80, 20, 80, 0),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/home');
@@ -152,7 +152,7 @@ class LoginScreen extends StatelessWidget {
 
               // Botão Registro
               Padding(
-                padding: const EdgeInsets.fromLTRB(170, 10, 170, 10),
+                padding: const EdgeInsets.fromLTRB(80, 10, 80, 10),
                 child: ElevatedButton(
                   onPressed: () {},
                   child: const Text(
