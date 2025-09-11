@@ -64,9 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Saldo Total
             Card(
-              margin: const EdgeInsets.fromLTRB(1, 30, 1, 0),
+              margin: const EdgeInsets.fromLTRB(10, 30, 0, 0),
               color: const Color(0xFF1f7735),
               elevation: 12,
               shape: cardShape,
@@ -74,37 +73,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 180,
                 width: double.infinity,
                 child: Padding(
-                  padding: const EdgeInsets.all(15),
+                  padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Saldo Total',
-                            style: TextStyle(fontSize: 30, color: Colors.white),
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.visibility,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.autorenew_rounded,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                      const Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Saldo Total',
+                          style: TextStyle(fontSize: 30, color: Colors.white),
+                        ),
                       ),
                       const SizedBox(height: 10),
                       Align(
@@ -137,7 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
+            // Suas Contas
             const Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -200,14 +179,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       'Gastos por Categoria',
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                    SizedBox(height: 10),
-                    SizedBox(height: 200, width: 400, child: DonutChart()),
+                    const SizedBox(height: 10),
+                    const SizedBox(height: 200, child: DonutChart()),
                   ],
                 ),
               ),
             ),
-
-            // Ações Rápidas
             Card(
               margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
               color: Colors.white,
