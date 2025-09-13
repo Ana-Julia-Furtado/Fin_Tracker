@@ -13,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   double _saldo = 15.75;
   var DateTime_ultimaAtualizacao = DateTime.now();
+  bool _mostrarSaldo = true;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -52,10 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           icon: Transform.rotate(
             angle: math.pi,
-            child: const Icon(
-              Icons.logout,
-              color: Color.fromARGB(255, 255, 255, 255),
-            ),
+            child: const Icon(Icons.logout, color: Colors.white),
           ),
         ),
       ),
@@ -91,13 +89,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               IconButton(
                                 padding: EdgeInsets.zero,
                                 constraints: const BoxConstraints(),
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.visibility,
+                                onPressed: () {
+                                  setState(() {
+                                    _mostrarSaldo = !_mostrarSaldo;
+                                  });
+                                },
+                                icon: Icon(
+                                  _mostrarSaldo
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
                                   color: Colors.white,
                                 ),
                               ),
-
                               IconButton(
                                 padding: EdgeInsets.zero,
                                 constraints: const BoxConstraints(),
@@ -119,7 +122,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          currencyFormat.format(_saldo),
+                          _mostrarSaldo
+                              ? currencyFormat.format(_saldo)
+                              : '*******',
                           style: const TextStyle(
                             fontSize: 45,
                             fontWeight: FontWeight.bold,
@@ -270,7 +275,7 @@ class AccountCard extends StatelessWidget {
               title,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 255, 255, 255),
+                color: Colors.white,
                 fontSize: 15,
               ),
             ),
