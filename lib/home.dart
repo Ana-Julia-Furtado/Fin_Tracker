@@ -89,13 +89,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           Row(
                             children: [
                               IconButton(
+                                padding: EdgeInsets.zero,
+                                constraints: const BoxConstraints(),
                                 onPressed: () {},
                                 icon: const Icon(
                                   Icons.visibility,
                                   color: Colors.white,
                                 ),
                               ),
+
                               IconButton(
+                                padding: EdgeInsets.zero,
+                                constraints: const BoxConstraints(),
                                 onPressed: () {
                                   setState(() {
                                     DateTime_ultimaAtualizacao = DateTime.now();
@@ -142,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             const SizedBox(height: 30),
-            // Suas Contas
+
             const Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -150,46 +155,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(fontSize: 25, color: Colors.black),
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 5),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: [
-                  Card(
-                    margin: const EdgeInsets.all(8),
-                    child: SizedBox(
-                      width: 150,
-                      height: 100,
-                      child: Center(child: Text("Conta Corrente")),
-                    ),
-                  ),
-                  Card(
-                    margin: const EdgeInsets.all(8),
-                    child: SizedBox(
-                      width: 150,
-                      height: 100,
-                      child: Center(child: Text("Poupança")),
-                    ),
-                  ),
-                  Card(
-                    margin: const EdgeInsets.all(8),
-                    child: SizedBox(
-                      width: 150,
-                      height: 100,
-                      child: Center(child: Text("Investimentos")),
-                    ),
-                  ),
-                  Card(
-                    margin: const EdgeInsets.all(8),
-                    child: SizedBox(
-                      width: 150,
-                      height: 100,
-                      child: Center(child: Text("Cartão de Crédito")),
-                    ),
-                  ),
+                children: const [
+                  AccountCard(title: "Conta Corrente"),
+                  AccountCard(title: "Poupança"),
+                  AccountCard(title: "Investimentos"),
+                  AccountCard(title: "Cartão de Crédito"),
                 ],
               ),
             ),
+
+            const SizedBox(height: 5),
 
             Card(
               margin: const EdgeInsets.fromLTRB(15, 10, 0, 5),
@@ -205,12 +184,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       'Gastos por Categoria',
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                    const SizedBox(height: 10),
-                    const SizedBox(height: 200, child: DonutChart()),
+                    SizedBox(height: 10),
+                    SizedBox(height: 200, child: DonutChart()),
                   ],
                 ),
               ),
             ),
+
             Card(
               margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
               color: Colors.white,
@@ -231,7 +211,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            // Transações Recentes
             Card(
               margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
               color: Colors.white,
@@ -271,89 +250,30 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class AccountCard extends StatelessWidget {
   final String title;
-  final EdgeInsets? margin;
-  final EdgeInsets? padding;
-  final double? elevation;
-  final ShapeBorder? shape;
-  const AccountCard({
-    super.key,
-    required this.title,
-    this.margin,
-    this.padding,
-    this.elevation,
-    this.shape,
-  });
+  const AccountCard({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: margin,
-      child: Material(
-        elevation: elevation ?? 12,
-        shape:
-            shape ??
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        color: const Color.fromARGB(255, 60, 123, 182),
+    return Card(
+      elevation: 5,
+      color: const Color(0xFF1f7735),
+      margin: const EdgeInsets.all(8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: SizedBox(
+        width: 150,
+        height: 100,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 40),
-          child: Center(
+          padding: const EdgeInsets.all(10),
+          child: Align(
+            alignment: Alignment.topLeft,
             child: Text(
               title,
-              textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Color.fromARGB(255, 233, 233, 233),
                 fontWeight: FontWeight.bold,
-                fontSize: 13,
-                shadows: [
-                  Shadow(
-                    blurRadius: 10,
-                    color: Color.fromARGB(255, 53, 46, 46),
-                    offset: Offset(5, 5),
-                  ),
-                ],
+                color: Color.fromARGB(255, 255, 255, 255),
+                fontSize: 15,
               ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ActionButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-  final EdgeInsets? margin;
-  const ActionButton({
-    super.key,
-    required this.text,
-    required this.onPressed,
-    this.margin,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: margin,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size.fromHeight(50),
-          backgroundColor: const Color.fromARGB(255, 2, 70, 13),
-        ),
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 13,
-            shadows: [
-              Shadow(
-                blurRadius: 10,
-                color: Color(0xFF757474),
-                offset: Offset(5, 5),
-              ),
-            ],
           ),
         ),
       ),
