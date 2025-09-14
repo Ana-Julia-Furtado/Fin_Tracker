@@ -166,17 +166,28 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 children: const [
                   AccountCard(
+                    icon: Icons.account_balance,
                     title: "Conta Corrente",
                     subtitle: "Conta Corrente",
+                    valorConta: 32.45,
                   ),
-                  AccountCard(title: "Poupança", subtitle: "Poupança"),
                   AccountCard(
+                    icon: Icons.savings_rounded,
+                    title: "Poupança",
+                    subtitle: "Poupança",
+                    valorConta: 2.50,
+                  ),
+                  AccountCard(
+                    icon: Icons.trending_up_sharp,
                     title: "Investimentos",
                     subtitle: "Investimentos",
+                    valorConta: 0.70,
                   ),
                   AccountCard(
+                    icon: Icons.credit_card_rounded,
                     title: "Cartão de Crédito",
                     subtitle: "Cartão de Crédito",
+                    valorConta: -15.00,
                   ),
                 ],
               ),
@@ -265,10 +276,25 @@ class _HomeScreenState extends State<HomeScreen> {
 class AccountCard extends StatelessWidget {
   final String title;
   final String subtitle;
-  const AccountCard({super.key, required this.title, required this.subtitle});
+  final IconData icon;
+  final double valorConta;
+
+  const AccountCard({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.valorConta,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final currencyFormat = NumberFormat.currency(
+      locale: 'pt_BR',
+      symbol: 'R\$',
+      decimalDigits: 2,
+    );
+
     return Card(
       elevation: 5,
       color: const Color.fromARGB(255, 255, 255, 255),
@@ -284,14 +310,20 @@ class AccountCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 0, 0, 0),
-                    fontSize: 20,
-                  ),
+                Row(
+                  children: [
+                    Icon(icon, size: 25, color: Colors.blue),
+                    SizedBox(width: 8),
+                    Text(
+                      title,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -300,6 +332,18 @@ class AccountCard extends StatelessWidget {
                     fontWeight: FontWeight.normal,
                     color: Colors.black.withOpacity(0.6),
                     fontSize: 15,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    currencyFormat.format(valorConta),
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: valorConta >= 0 ? Colors.green : Colors.red,
+                    ),
                   ),
                 ),
               ],
