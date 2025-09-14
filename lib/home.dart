@@ -165,10 +165,19 @@ class _HomeScreenState extends State<HomeScreen> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: const [
-                  AccountCard(title: "Conta Corrente"),
-                  AccountCard(title: "Poupança"),
-                  AccountCard(title: "Investimentos"),
-                  AccountCard(title: "Cartão de Crédito"),
+                  AccountCard(
+                    title: "Conta Corrente",
+                    subtitle: "Conta Corrente",
+                  ),
+                  AccountCard(title: "Poupança", subtitle: "Poupança"),
+                  AccountCard(
+                    title: "Investimentos",
+                    subtitle: "Investimentos",
+                  ),
+                  AccountCard(
+                    title: "Cartão de Crédito",
+                    subtitle: "Cartão de Crédito",
+                  ),
                 ],
               ),
             ),
@@ -255,29 +264,45 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class AccountCard extends StatelessWidget {
   final String title;
-  const AccountCard({super.key, required this.title});
+  final String subtitle;
+  const AccountCard({super.key, required this.title, required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      color: const Color(0xFF1f7735),
+      color: const Color.fromARGB(255, 255, 255, 255),
       margin: const EdgeInsets.all(8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: SizedBox(
-        width: 150,
-        height: 100,
+        width: 180,
+        height: 145,
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Align(
             alignment: Alignment.topLeft,
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontSize: 15,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black.withOpacity(0.6),
+                    fontSize: 15,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
