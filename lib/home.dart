@@ -236,12 +236,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             Card(
-              margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
+              margin: const EdgeInsets.fromLTRB(15, 10, 0, 5),
               color: Colors.white,
               elevation: 12,
               shape: cardShape,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(90, 60, 130, 60),
+                padding: const EdgeInsets.fromLTRB(120, 60, 120, 60),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
