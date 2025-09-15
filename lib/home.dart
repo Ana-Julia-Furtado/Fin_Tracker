@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
 
       body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(20, 10, 20, 120),
+        padding: const EdgeInsets.fromLTRB(10, 10, 15, 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -152,13 +152,32 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             const SizedBox(height: 30),
-
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Suas Contas',
-                style: TextStyle(fontSize: 25, color: Colors.black),
-              ),
+            Row(
+              children: [
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Suas Contas',
+                    style: TextStyle(fontSize: 25, color: Colors.black),
+                  ),
+                ),
+                SizedBox(width: 180),
+                Card(
+                  elevation: 10,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 5, 105, 26),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.add),
+                      color: Colors.white,
+                      iconSize: 35,
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 5),
             SingleChildScrollView(
