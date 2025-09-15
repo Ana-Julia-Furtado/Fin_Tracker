@@ -23,7 +23,12 @@ class _HomeScreenState extends State<HomeScreen> {
       symbol: 'R\$',
       decimalDigits: 2,
     );
-
+    final actionItems = [
+      {'icon': Icons.shopping_cart_outlined, 'title': 'Adicionar Gasto'},
+      {'icon': Icons.receipt_long_outlined, 'title': 'Adicionar Receita'},
+      {'icon': Icons.swap_horiz_rounded, 'title': 'Transferir'},
+      {'icon': Icons.qr_code_scanner_rounded, 'title': 'Escanear Recibo'},
+    ];
     final cardShape = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15),
     );
@@ -234,22 +239,34 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-
             Card(
-              margin: const EdgeInsets.fromLTRB(15, 10, 0, 5),
+              margin: const EdgeInsets.fromLTRB(15, 10, 15, 5),
               color: Colors.white,
               elevation: 12,
               shape: cardShape,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(120, 60, 120, 60),
+                padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
                     Text(
                       'Ações Rápidas',
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 20),
+                    GridView.count(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 15,
+                      mainAxisSpacing: 15,
+                      shrinkWrap: true,
+                      children: actionItems.map((item) {
+                        return ActionCard(
+                          icon: item['icon'] as IconData,
+                          title: item['title'] as String,
+                        );
+                      }).toList(),
+                    ),
                   ],
                 ),
               ),
@@ -261,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
               elevation: 12,
               shape: cardShape,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(120, 40, 120, 40),
+                padding: const EdgeInsets.fromLTRB(60, 20, 60, 20),
                 child: Column(
                   children: const [
                     Text(
@@ -269,6 +286,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
                     SizedBox(height: 10),
+                    Column(
+                      children: [
+                        TransContainer(title: "Alimentação", icon: Icons.add),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -364,6 +386,130 @@ class AccountCard extends StatelessWidget {
                       color: valorConta >= 0 ? Colors.green : Colors.red,
                     ),
                   ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ActionCard extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  const ActionCard({super.key, required this.title, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    final currencyFormat = NumberFormat.currency(
+      locale: 'pt_BR',
+      symbol: 'R\$',
+      decimalDigits: 2,
+    );
+
+    return Card(
+      elevation: 5,
+      color: const Color.fromARGB(255, 162, 224, 165),
+      margin: const EdgeInsets.fromLTRB(0, 5, 5, 5),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: SizedBox(
+        width: 160,
+        height: 140,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(width: 20),
+                    Card(
+                      color: const Color.fromARGB(255, 2, 102, 27),
+                      child: Center(
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          child: Icon(
+                            icon,
+                            size: 40,
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TransContainer extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  const TransContainer({super.key, required this.title, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    final currencyFormat = NumberFormat.currency(
+      locale: 'pt_BR',
+      symbol: 'R\$',
+      decimalDigits: 2,
+    );
+
+    return Container(
+      color: const Color.fromARGB(255, 247, 250, 247),
+      margin: const EdgeInsets.fromLTRB(0, 5, 5, 5),
+      child: SizedBox(
+        width: 300,
+        height: 150,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(5, 5, 5, 10),
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(width: 20),
+                    Container(
+                      color: const Color.fromARGB(255, 249, 255, 250),
+                      child: Center(
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          child: Icon(
+                            icon,
+                            size: 40,
+                            color: const Color.fromARGB(255, 0, 0, 0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
