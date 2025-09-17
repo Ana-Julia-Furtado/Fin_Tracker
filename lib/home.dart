@@ -24,10 +24,30 @@ class _HomeScreenState extends State<HomeScreen> {
       decimalDigits: 2,
     );
     final actionItems = [
-      {'icon': Icons.shopping_cart_outlined, 'title': 'Adicionar Gasto'},
-      {'icon': Icons.receipt_long_outlined, 'title': 'Adicionar Receita'},
-      {'icon': Icons.swap_horiz_rounded, 'title': 'Transferir'},
-      {'icon': Icons.qr_code_scanner_rounded, 'title': 'Escanear Recibo'},
+      {
+        'icon': Icons.shopping_cart_outlined,
+        'title': 'Adicionar Gasto',
+        'color_light': const Color.fromARGB(255, 229, 111, 111),
+        'color_dark': const Color.fromARGB(255, 134, 3, 3),
+      },
+      {
+        'icon': Icons.receipt_long_outlined,
+        'title': 'Adicionar Receita',
+        'color_light': const Color.fromARGB(255, 134, 248, 136),
+        'color_dark': const Color.fromARGB(255, 1, 94, 11),
+      },
+      {
+        'icon': Icons.swap_horiz_rounded,
+        'title': 'Transferir',
+        'color_light': const Color.fromARGB(255, 154, 198, 235),
+        'color_dark': const Color.fromARGB(255, 1, 41, 74),
+      },
+      {
+        'icon': Icons.camera_alt,
+        'title': 'Escanear Recibo',
+        'color_light': const Color.fromARGB(255, 236, 243, 100),
+        'color_dark': const Color.fromARGB(255, 121, 115, 3),
+      },
     ];
     final cardShape = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(15),
@@ -264,6 +284,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         return ActionCard(
                           icon: item['icon'] as IconData,
                           title: item['title'] as String,
+                          color_light: item['color_light'] as Color,
+                          color_dark: item['color_dark'] as Color,
                         );
                       }).toList(),
                     ),
@@ -398,8 +420,16 @@ class AccountCard extends StatelessWidget {
 
 class ActionCard extends StatelessWidget {
   final String title;
+  final Color color_light;
+  final Color color_dark;
   final IconData icon;
-  const ActionCard({super.key, required this.title, required this.icon});
+  const ActionCard({
+    super.key,
+    required this.title,
+    required this.color_light,
+    required this.color_dark,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -411,7 +441,7 @@ class ActionCard extends StatelessWidget {
 
     return Card(
       elevation: 5,
-      color: const Color.fromARGB(255, 162, 224, 165),
+      color: color_light,
       margin: const EdgeInsets.fromLTRB(0, 5, 5, 5),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: SizedBox(
@@ -428,22 +458,30 @@ class ActionCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 0, 0, 0),
+                        color: color_dark,
                         fontSize: 16,
                       ),
                     ),
-                    SizedBox(width: 20),
-                    Card(
-                      color: const Color.fromARGB(255, 2, 102, 27),
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: Icon(
-                            icon,
-                            size: 40,
-                            color: const Color.fromARGB(255, 255, 255, 255),
+                    SizedBox(width: 5),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: Card(
+                        elevation: 20,
+                        color: color_dark,
+                        child: Container(
+                          height: 80,
+                          width: double.infinity,
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
+                              child: Icon(
+                                icon,
+                                size: 40,
+                                color: const Color.fromARGB(255, 255, 255, 255),
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -491,7 +529,7 @@ class TransContainer extends StatelessWidget {
                       title,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 0, 0, 0),
+                        color: Colors.white,
                         fontSize: 16,
                       ),
                     ),
