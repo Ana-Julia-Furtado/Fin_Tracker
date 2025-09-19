@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       {
         'icon': Icons.swap_horiz_rounded,
-        'title': 'Transferir',
+        'title': 'Editar Categorias',
         'color_light': const Color.fromARGB(255, 154, 198, 235),
         'color_dark': const Color.fromARGB(255, 1, 41, 74),
       },
@@ -295,25 +295,70 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             Card(
-              margin: const EdgeInsets.fromLTRB(10, 10, 0, 5),
+              margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
               color: Colors.white,
               elevation: 12,
               shape: cardShape,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(60, 20, 60, 20),
-                child: Column(
-                  children: const [
-                    Text(
-                      'Transações Recentes',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
-                    ),
-                    SizedBox(height: 10),
-                    Column(
-                      children: [
-                        TransContainer(title: "Alimentação", icon: Icons.add),
-                      ],
-                    ),
-                  ],
+              child: SizedBox(
+                height: 500,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Transações Recentes',
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                      const Icon(Icons.calendar_month_sharp),
+                      const SizedBox(height: 10),
+                      Expanded(
+                        child: ListView(
+                          children: const [
+                            TransactionsContainer(
+                              title: "Fast Food",
+                              icon: Icons.fastfood,
+                            ),
+                            TransactionsContainer(
+                              title: "Mercado",
+                              icon: Icons.local_restaurant_outlined,
+                            ),
+                            TransactionsContainer(
+                              title: "Transporte",
+                              icon: Icons.commute,
+                            ),
+                            TransactionsContainer(
+                              title: "Compras",
+                              icon: Icons.shopping_bag,
+                            ),
+                            TransactionsContainer(
+                              title: "Farmacia",
+                              icon: Icons.local_pharmacy_rounded,
+                            ),
+                            TransactionsContainer(
+                              title: "Enterterimento",
+                              icon: Icons.movie_sharp,
+                            ),
+                            TransactionsContainer(
+                              title: "Viagem",
+                              icon: Icons.beach_access_sharp,
+                            ),
+                            TransactionsContainer(
+                              title: "Alcool",
+                              icon: Icons.local_bar_sharp,
+                            ),
+                            TransactionsContainer(
+                              title: "Contas da casa",
+                              icon: Icons.home_outlined,
+                            ),
+                            TransactionsContainer(
+                              title: "Academia",
+                              icon: Icons.fitness_center_sharp,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -497,62 +542,54 @@ class ActionCard extends StatelessWidget {
   }
 }
 
-class TransContainer extends StatelessWidget {
+class TransactionsContainer extends StatelessWidget {
   final String title;
   final IconData icon;
-  const TransContainer({super.key, required this.title, required this.icon});
+
+  const TransactionsContainer({
+    super.key,
+    required this.title,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final currencyFormat = NumberFormat.currency(
-      locale: 'pt_BR',
-      symbol: 'R\$',
-      decimalDigits: 2,
-    );
-
     return Container(
-      color: const Color.fromARGB(255, 247, 250, 247),
-      margin: const EdgeInsets.fromLTRB(0, 5, 5, 5),
-      child: SizedBox(
-        width: 300,
-        height: 150,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(5, 5, 5, 10),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
-                    SizedBox(width: 20),
-                    Container(
-                      color: const Color.fromARGB(255, 249, 255, 250),
-                      child: Center(
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: Icon(
-                            icon,
-                            size: 40,
-                            color: const Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+      width: double.infinity,
+      height: 85,
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 203, 199, 239),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 255, 255, 255),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(
+              icon,
+              size: 40,
+              color: const Color.fromARGB(255, 79, 7, 213),
             ),
           ),
-        ),
+          const SizedBox(width: 15),
+          Expanded(
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
